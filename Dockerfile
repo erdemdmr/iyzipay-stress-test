@@ -9,9 +9,9 @@ RUN apk update && \
 ENV JMETER_HOME=/usr/share/apache-jmeter \
     JMETER_VERSION=5.3 \
     TEST_SCRIPT_FILE=/var/jmeter/test.jmx \
-    TEST_RESULT_DIR=/var/jmeter/result \
-    TEST_LOG_FILE=/var/jmeter/result/test.log \
-    TEST_RESULTS_FILE=/var/jmeter/result/test-result.csv \
+    TEST_RESULT_DIR=/var/jmeter \
+    TEST_LOG_FILE=/var/jmeter/test.log \
+    TEST_RESULTS_FILE=/var/jmeter/test-result.csv \
     USE_CACHED_SSL_CONTEXT=false \
     OPEN_CONNECTION_WAIT_TIME=5000 \
     OPEN_CONNECTION_TIMEOUT=20000 \
@@ -39,6 +39,7 @@ ENV JMETER_HOME=/usr/share/apache-jmeter \
     AWS_SECRET_ACCESS_KEY=EXAMPLEKEY \
     AWS_DEFAULT_REGION=eu-central-1 \
     PATH="~/.local/bin:$PATH" \
+    RESPONSE_FILE=/var/jmeter/response- \
     JVM_ARGS="-Xms2048m -Xmx4096m -XX:NewSize=1024m -XX:MaxNewSize=2048m -Duser.timezone=UTC"
 # Install Apache JMeter
 RUN wget http://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${JMETER_VERSION}.tgz && \
@@ -85,6 +86,10 @@ CMD echo -n > $TEST_LOG_FILE && \
     -JauthorizationPrefix=$AUTHORIZATION_PREFIX \
     -Jxiyzirnd=$XIYZIRND \
     -JcontentType=$CONTENT_TYPE \
-    -JthreadGroupName=$THREAD_GROUP_NAME && \
+    -JthreadGroupName=$THREAD_GROUP_NAME \
+    -JresponseFile=$RESPONSE_FILE && \
     echo -e "\n\n===== UPLOADING THE FILES TO AWS S3 =====\n\n" && \
-    aws s3 cp --recursive $TEST_RESULT_DIR s3://iyzipay-performance-test-logging/uploads/$THREAD_GROUP_NAME/
+    aws s3 cp $TEST_LOG_FILE s3://iyzipay-performance-test-logging/uploads/$THREAD_GROUP_NAME/ && \
+    aws s3 cp $TEST_RESULTS_FILE s3://iyzipay-performance-test-logging/uploads/$THREAD_GROUP_NAME/ && \
+    aws s3 cp $TEST_RESULT_DIR s3://iyzipay-performance-test-logging/uploads/$THREAD_GROUP_NAME/ --recursive --exclude "*" --include "*.json" && \
+    echo -e "\n\n===== UPLOAD COMPLETED SUCCESSFULLY =====\n\n"

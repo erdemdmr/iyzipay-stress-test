@@ -174,8 +174,22 @@
               <stringProp name="Argument.desc">Http Request Method</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
+            <elementProp name="responseFile" elementType="Argument">
+              <stringProp name="Argument.name">responseFile</stringProp>
+              <stringProp name="Argument.value">${__P(responseFile)}</stringProp>
+              <stringProp name="Argument.desc">Response File Name</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
           </collectionProp>
         </Arguments>
+        <hashTree/>
+        <ResultSaver guiclass="ResultSaverGui" testclass="ResultSaver" testname="Save Responses to a file" enabled="true">
+          <stringProp name="FileSaver.filename">${responseFile}</stringProp>
+          <boolProp name="FileSaver.errorsonly">false</boolProp>
+          <boolProp name="FileSaver.successonly">false</boolProp>
+          <boolProp name="FileSaver.skipsuffix">false</boolProp>
+          <boolProp name="FileSaver.skipautonumber">false</boolProp>
+        </ResultSaver>
         <hashTree/>
       </hashTree>
     </hashTree>
