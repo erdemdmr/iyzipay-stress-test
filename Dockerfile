@@ -47,7 +47,7 @@ RUN wget http://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${JMETER_V
     rm -f apache-jmeter-${JMETER_VERSION}.tgz && \
     mv apache-jmeter-${JMETER_VERSION} ${JMETER_HOME}
 # Copy test plans
-COPY jmeter/* /var/jmeter
+COPY jmeter/* /var/jmeter/
 # Expose port
 EXPOSE 443
 # The main command, where several things happen:
