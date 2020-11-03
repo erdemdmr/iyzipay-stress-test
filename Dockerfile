@@ -40,7 +40,7 @@ ENV JMETER_HOME=/usr/share/apache-jmeter \
     AWS_DEFAULT_REGION=eu-central-1 \
     PATH="~/.local/bin:$PATH" \
     RESPONSE_FILE=/var/jmeter/response- \
-    JVM_ARGS="-Xms2048m -Xmx4096m -XX:NewSize=1024m -XX:MaxNewSize=2048m -Duser.timezone=UTC"
+    JVM_ARGS="-Xms8192m -Xmx32768m -XX:NewSize=4096m -XX:MaxNewSize=16384m -Duser.timezone=UTC"
 # Install Apache JMeter
 RUN wget http://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${JMETER_VERSION}.tgz && \
     tar zxvf apache-jmeter-${JMETER_VERSION}.tgz && \
