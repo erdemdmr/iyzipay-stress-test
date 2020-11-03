@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Iyzipay Stress Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="${threadGroupName}" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">${loopCount}</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">${numberOfThreads}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${rampUpTime}</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${host}</stringProp>
+          <stringProp name="HTTPSampler.port">${port}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">${requestPath}</stringProp>
+          <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </ConfigTestElement>
+        <hashTree/>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Authorization</stringProp>
+              <stringProp name="Header.value">${authorizationPrefix} ${authorization}</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">x-iyzi-rnd</stringProp>
+              <stringProp name="Header.value">${xiyzirnd}</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">${contentType}</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;price&quot;:1,&quot;paidPrice&quot;:1.2,&quot;installment&quot;:1,&quot;paymentChannel&quot;:&quot;WEB&quot;,&quot;basketId&quot;:&quot;B67832&quot;,&quot;paymentGroup&quot;:&quot;PRODUCT&quot;,&quot;paymentCard&quot;:{&quot;cardHolderName&quot;:&quot;John Doe&quot;,&quot;cardNumber&quot;:&quot;5528790000000008&quot;,&quot;expireYear&quot;:&quot;2030&quot;,&quot;expireMonth&quot;:&quot;12&quot;,&quot;cvc&quot;:&quot;123&quot;,&quot;registerCard&quot;:0,&quot;registerConsumerCard&quot;:false},&quot;buyer&quot;:{&quot;id&quot;:&quot;BY789&quot;,&quot;name&quot;:&quot;John&quot;,&quot;surname&quot;:&quot;Doe&quot;,&quot;identityNumber&quot;:&quot;74300864791&quot;,&quot;email&quot;:&quot;email@email.com&quot;,&quot;gsmNumber&quot;:&quot;+905350000000&quot;,&quot;registrationDate&quot;:&quot;2013-04-21 15:12:09&quot;,&quot;lastLoginDate&quot;:&quot;2015-10-05 12:43:35&quot;,&quot;registrationAddress&quot;:&quot;Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1&quot;,&quot;city&quot;:&quot;Istanbul&quot;,&quot;country&quot;:&quot;Turkey&quot;,&quot;zipCode&quot;:&quot;34732&quot;,&quot;ip&quot;:&quot;85.34.78.112&quot;},&quot;shippingAddress&quot;:{&quot;address&quot;:&quot;Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1&quot;,&quot;zipCode&quot;:&quot;34742&quot;,&quot;contactName&quot;:&quot;Jane Doe&quot;,&quot;city&quot;:&quot;Istanbul&quot;,&quot;country&quot;:&quot;Turkey&quot;},&quot;billingAddress&quot;:{&quot;address&quot;:&quot;Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1&quot;,&quot;zipCode&quot;:&quot;34742&quot;,&quot;contactName&quot;:&quot;Jane Doe&quot;,&quot;city&quot;:&quot;Istanbul&quot;,&quot;country&quot;:&quot;Turkey&quot;},&quot;basketItems&quot;:[{&quot;id&quot;:&quot;BI101&quot;,&quot;price&quot;:0.3,&quot;name&quot;:&quot;Binocular&quot;,&quot;category1&quot;:&quot;Collectibles&quot;,&quot;category2&quot;:&quot;Accessories&quot;,&quot;itemType&quot;:&quot;PHYSICAL&quot;,&quot;subMerchantKey&quot;:&quot;W88zSsNxbAGh0i5JbyPpcLMzgEk\u003d&quot;,&quot;subMerchantPrice&quot;:0.3},{&quot;id&quot;:&quot;BI102&quot;,&quot;price&quot;:0.5,&quot;name&quot;:&quot;Game code&quot;,&quot;category1&quot;:&quot;Game&quot;,&quot;category2&quot;:&quot;Online Game Items&quot;,&quot;itemType&quot;:&quot;VIRTUAL&quot;,&quot;subMerchantKey&quot;:&quot;W88zSsNxbAGh0i5JbyPpcLMzgEk\u003d&quot;,&quot;subMerchantPrice&quot;:0.5},{&quot;id&quot;:&quot;BI103&quot;,&quot;price&quot;:0.2,&quot;name&quot;:&quot;Usb&quot;,&quot;category1&quot;:&quot;Electronics&quot;,&quot;category2&quot;:&quot;Usb / Cable&quot;,&quot;itemType&quot;:&quot;PHYSICAL&quot;,&quot;subMerchantKey&quot;:&quot;W88zSsNxbAGh0i5JbyPpcLMzgEk\u003d&quot;,&quot;subMerchantPrice&quot;:0.2}],&quot;currency&quot;:&quot;TRY&quot;,&quot;locale&quot;:&quot;tr&quot;,&quot;conversationId&quot;:&quot;123456789&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+          <stringProp name="HTTPSampler.path"></stringProp>
+          <stringProp name="HTTPSampler.method">${requestMethod}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Constant Throughput Timer" enabled="true">
+          <intProp name="calcMode">1</intProp>
+          <stringProp name="throughput">${throughput}</stringProp>
+        </ConstantThroughputTimer>
+        <hashTree/>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="protocol" elementType="Argument">
+              <stringProp name="Argument.name">protocol</stringProp>
+              <stringProp name="Argument.value">${__P(protocol,http)}</stringProp>
+              <stringProp name="Argument.desc">Server Protocol</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="host" elementType="Argument">
+              <stringProp name="Argument.name">host</stringProp>
+              <stringProp name="Argument.value">${__P(host,localhost)}</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">Server Host</stringProp>
+            </elementProp>
+            <elementProp name="port" elementType="Argument">
+              <stringProp name="Argument.name">port</stringProp>
+              <stringProp name="Argument.value">${__P(port,8080)}</stringProp>
+              <stringProp name="Argument.desc">Server Port</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="rampUpTime" elementType="Argument">
+              <stringProp name="Argument.name">rampUpTime</stringProp>
+              <stringProp name="Argument.value">${__P(rampUpTime,0)}</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">Ramp Up Time</stringProp>
+            </elementProp>
+            <elementProp name="numberOfThreads" elementType="Argument">
+              <stringProp name="Argument.name">numberOfThreads</stringProp>
+              <stringProp name="Argument.value">${__P(numberOfThreads,100)}</stringProp>
+              <stringProp name="Argument.desc">Number Of Threads</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="loopCount" elementType="Argument">
+              <stringProp name="Argument.name">loopCount</stringProp>
+              <stringProp name="Argument.value">${__P(loopCount,10)}</stringProp>
+              <stringProp name="Argument.desc">Loop Count</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="authorization" elementType="Argument">
+              <stringProp name="Argument.name">authorization</stringProp>
+              <stringProp name="Argument.value">${__P(authorization)}</stringProp>
+              <stringProp name="Argument.desc">Header Authorization</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="authorizationPrefix" elementType="Argument">
+              <stringProp name="Argument.name">authorizationPrefix</stringProp>
+              <stringProp name="Argument.value">${__P(authorizationPrefix)}</stringProp>
+              <stringProp name="Argument.desc">Header Authorization Prefix</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="xiyzirnd" elementType="Argument">
+              <stringProp name="Argument.name">xiyzirnd</stringProp>
+              <stringProp name="Argument.value">${__P(xiyzirnd)}</stringProp>
+              <stringProp name="Argument.desc">Header Authorization</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="contentType" elementType="Argument">
+              <stringProp name="Argument.name">contentType</stringProp>
+              <stringProp name="Argument.value">${__P(contentType)}</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">Content Type</stringProp>
+            </elementProp>
+            <elementProp name="throughput" elementType="Argument">
+              <stringProp name="Argument.name">throughput</stringProp>
+              <stringProp name="Argument.value">${__P(throughput,1000)}</stringProp>
+              <stringProp name="Argument.desc">Throughput per minute</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="threadGroupName" elementType="Argument">
+              <stringProp name="Argument.name">threadGroupName</stringProp>
+              <stringProp name="Argument.value">${__P(threadGroupName)}</stringProp>
+              <stringProp name="Argument.desc">Thread Group Name</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="requestPath" elementType="Argument">
+              <stringProp name="Argument.name">requestPath</stringProp>
+              <stringProp name="Argument.value">${__P(requestPath)}</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">Request Path</stringProp>
+            </elementProp>
+            <elementProp name="requestMethod" elementType="Argument">
+              <stringProp name="Argument.name">requestMethod</stringProp>
+              <stringProp name="Argument.value">${__P(requestMethod,GET)}</stringProp>
+              <stringProp name="Argument.desc">Http Request Method</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="responseFile" elementType="Argument">
+              <stringProp name="Argument.name">responseFile</stringProp>
+              <stringProp name="Argument.value">${__P(responseFile)}</stringProp>
+              <stringProp name="Argument.desc">Response File Name</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
+        <ResultSaver guiclass="ResultSaverGui" testclass="ResultSaver" testname="Save Responses to a file" enabled="true">
+          <stringProp name="FileSaver.filename">${responseFile}</stringProp>
+          <boolProp name="FileSaver.errorsonly">false</boolProp>
+          <boolProp name="FileSaver.successonly">false</boolProp>
+          <boolProp name="FileSaver.skipsuffix">false</boolProp>
+          <boolProp name="FileSaver.skipautonumber">false</boolProp>
+        </ResultSaver>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

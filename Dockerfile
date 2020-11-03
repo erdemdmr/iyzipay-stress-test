@@ -8,10 +8,10 @@ RUN apk update && \
 # Set variables
 ENV JMETER_HOME=/usr/share/apache-jmeter \
     JMETER_VERSION=5.3 \
-    TEST_SCRIPT_FILE=/var/jmeter/test.jmx \
+    TEST_SCRIPT_FILE=payment-auth.jmx \
     TEST_RESULT_DIR=/var/jmeter \
-    TEST_LOG_FILE=/var/jmeter/test.log \
-    TEST_RESULTS_FILE=/var/jmeter/test-result.csv \
+    TEST_LOG_FILE=/var/jmeter/payment-auth.log \
+    TEST_RESULTS_FILE=/var/jmeter/payment-auth-result.csv \
     USE_CACHED_SSL_CONTEXT=false \
     OPEN_CONNECTION_WAIT_TIME=5000 \
     OPEN_CONNECTION_TIMEOUT=20000 \
@@ -47,7 +47,7 @@ RUN wget http://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${JMETER_V
     rm -f apache-jmeter-${JMETER_VERSION}.tgz && \
     mv apache-jmeter-${JMETER_VERSION} ${JMETER_HOME}
 # Copy test plans
-COPY jmeter/test-plan.jmx ${TEST_SCRIPT_FILE}
+COPY jmeter/* /var/jmeter
 # Expose port
 EXPOSE 443
 # The main command, where several things happen:
@@ -58,7 +58,7 @@ CMD echo -n > $TEST_LOG_FILE && \
     echo -n > $TEST_RESULTS_FILE && \
     export PATH=~/.local/bin:$PATH && \
     $JMETER_HOME/bin/jmeter -n \
-    -t=$TEST_SCRIPT_FILE \
+    -t=/var/jmeter/$TEST_SCRIPT_FILE \
     -j=$TEST_LOG_FILE \
     -l=$TEST_RESULTS_FILE \
     -Jhttps.use.cached.ssl.context=$USE_CACHED_SSL_CONTEXT \
