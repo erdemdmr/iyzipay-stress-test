@@ -66,8 +66,8 @@
                 <stringProp name="Argument.value">{&#xd;
     &quot;locale&quot;: &quot;tr&quot;,&#xd;
     &quot;conversationId&quot;: &quot;123456789&quot;,&#xd;
-    &quot;price&quot;: 100,&#xd;
-    &quot;binNumber&quot;: &quot;554960&quot;&#xd;
+    &quot;price&quot;: &quot;200.0&quot;,&#xd;
+    &quot;binNumber&quot;: &quot;418344&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
